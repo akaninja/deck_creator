@@ -1,0 +1,9 @@
+<h1>Facções</h1>
+<%= link_to  'Criar facção', new_faction_path %>
+
+<br>
+<% @factions.each do |faction| %>
+<h2><%= faction.name %></h2>
+<% end %>
+
+
