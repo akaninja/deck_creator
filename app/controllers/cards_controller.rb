@@ -14,7 +14,7 @@ class CardsController < ApplicationController
       @factions = Faction.all
       @card_types = CardType.all
       flash[:alert] = 'Não foi possível salvar a carta'
-      render :new
+      render 'new'
     end
   end
 

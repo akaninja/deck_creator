@@ -1,0 +1,10 @@
+<h1>Tipos</h1>
+
+<ul>
+<% @card_types.each do |card_type|%>
+  <li><%= card_type.name %></li>
+<% end %>
+</ul>
+
+<p><%= link_to  "Criar tipo", new_card_type_path %></p>
+<p><%= link_to  "Voltar", root_path %></p>

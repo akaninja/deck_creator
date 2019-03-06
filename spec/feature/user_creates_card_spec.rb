@@ -36,7 +36,41 @@ feature 'User creates card' do
     fill_in 'Descrição', with: ''
     click_on 'Enviar'
 
-    #expect(current_path).to eq new_card_path
+    expect(page).to have_content('Não foi possível salvar a carta')
+  end
+
+  scenario 'and play cost must be positive' do
+
+    Faction.create(name: 'Ruby')
+    CardType.create(name: 'Criatura')
+
+    visit root_path
+    click_on 'Criar carta'
+    select 'Ruby', from: 'Facção'
+    fill_in 'Nome', with: 'Lobisomem'
+    fill_in 'Custo', with: '-5'
+    select 'Criatura', from: 'Tipo'
+    fill_in 'Descrição', with: 'Vira, vira, vira homem... vira, vira lobisomem'
+    click_on 'Enviar'
+
+    expect(page).to have_content('Não foi possível salvar a carta')
+
+  end
+
+  scenario 'and name must be unique' do
+    faction = Faction.create(name: 'Ruby')
+    card_type = CardType.create(name: 'Criatura')
+    Card.create(name: 'Lobisomem', faction: faction, card_type: card_type, play_cost: '5', description: "Descrição")
+
+    visit root_path
+    click_on 'Criar carta'
+    select 'Ruby', from: 'Facção'
+    fill_in 'Nome', with: 'Lobisomem'
+    fill_in 'Custo', with: '5'
+    select 'Criatura', from: 'Tipo'
+    fill_in 'Descrição', with: 'Vira, vira, vira homem... vira, vira lobisomem'
+    click_on 'Enviar'
+
     expect(page).to have_content('Não foi possível salvar a carta')
   end
 

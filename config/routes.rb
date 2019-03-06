@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'home#index'
   resources :cards
   resources :factions
+  resources :card_types
 end
