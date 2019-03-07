@@ -13,10 +13,16 @@
     Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
                 description: 'Uivos terríveis...')
     Card.create(name: 'Escudo', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Gemidos terríveis...')
+                description: 'Fiel escueiro.')
     Card.create(name: 'Bola de fogo', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Uivos terríveis...')
+                description: 'Alô, quem é?')
     Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '7', 
-                description: 'Gemidos terríveis...')
-    Card.create(name: 'Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
-                description: 'Uivos terríveis...')
+                description: 'Meu herói....')
+    Card.create(name: 'Chuva de Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
+                description: 'Também conhecido como granizo.')
+    Card.create(name: 'Rei', card_type: card_type1, faction: faction1, play_cost: '9', 
+                description: 'Monarca.')
+    Card.create(name: 'Bobo da corte', card_type: card_type1, faction: faction1, play_cost: '11', 
+                description: 'Palhaço da hora.')
+                
+                

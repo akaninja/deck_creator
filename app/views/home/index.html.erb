@@ -1,1 +1,7 @@
 <h1>Construtor de baralho</h1>
+
+<h2>Últimas cartas criadas</h2>
+<% @cards.each do |card| %>
+<h3><%= link_to  card.name, card_path(card.id) %></h3>
+<p><%= card.faction.name %> | <%= card.play_cost %> mana </p>
+<% end %>
