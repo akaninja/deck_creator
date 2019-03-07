@@ -1,7 +1,9 @@
 <h1>Facções</h1>
 <ul>
 <% @factions.each do |faction| %>
-<li><%= faction.name %></li>
+<li><%= faction.name %> | 
+<%= link_to  "Editar", edit_faction_path(faction.id) %> | 
+<%= link_to  "Excluir", faction_path(faction.id), method: :delete, data: {confirm: 'Excluir facção? Todas as cartas dessa facção serão removidas'} %></li>
 <% end %>
 </ul>
 <br>

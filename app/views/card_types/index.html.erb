@@ -2,7 +2,11 @@
 
 <ul>
 <% @card_types.each do |card_type|%>
-  <li><%= card_type.name %></li>
+  <li>
+  <%= card_type.name %> | 
+   <%= link_to  "Editar", edit_card_type_path(card_type.id) %> | 
+   <%= link_to  "Excluir", card_type_path(card_type.id), method: :delete, data:{confirm: 'Excluir tipo? Todas as cartas desse tipo serão removidas'} %>
+  </li>
 <% end %>
 </ul>
 

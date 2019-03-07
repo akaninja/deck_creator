@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+    
+    card_type1 = CardType.create(name: 'Magia')
+    card_type2 = CardType.create(name: 'Encantamento')
+    faction1 = Faction.create(name: 'Ruby')
+    faction2 = Faction.create(name: 'Javascript')
+    Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
+                description: 'Uivos terríveis...')
+    Card.create(name: 'Escudo', card_type: card_type2, faction: faction2, play_cost: '4', 
+                description: 'Gemidos terríveis...')
+    Card.create(name: 'Bola de fogo', card_type: card_type1, faction: faction1, play_cost: '6', 
+                description: 'Uivos terríveis...')
+    Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '7', 
+                description: 'Gemidos terríveis...')
+    Card.create(name: 'Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
+                description: 'Uivos terríveis...')

@@ -1,0 +1,9 @@
+<h1>Editar facção</h1>
+<%= flash[:alert] %>
+<%= form_for @faction do |f| %>
+  <%= f.label :name, 'Nome' %>
+  <%= f.text_field :name %>
+  <%= f.submit 'Enviar' %>
+<% end %>
+<br>
+<%= link_to  "Voltar", factions_path %>

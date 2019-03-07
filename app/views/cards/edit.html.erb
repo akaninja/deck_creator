@@ -1,0 +1,15 @@
+<h1>Editar carta</h1>
+<%= flash[:alert] %>
+<%= form_for @card do |f| %>
+  <p><%= f.label :name, 'Nome'%></p>
+  <p><%= f.text_field :name %></p>
+  <p><%= f.label :faction_id, 'Facção' %></p>
+  <p><%= f.collection_select :faction_id, @factions, :id, :name %></p>
+  <p><%= f.label :play_cost, 'Custo'%></p>
+  <p><%= f.number_field :play_cost %></p>
+  <p><%= f.label :card_type_id, 'Tipo' %></p>
+  <p><%= f.collection_select :card_type_id, @card_types, :id, :name %></p>
+  <p><%= f.label :description, 'Descrição' %></p>
+  <p><%= f.text_area :description %></p>
+  <p><%= f.submit 'Enviar' %></p>
+<% end %>

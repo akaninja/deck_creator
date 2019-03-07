@@ -1,5 +1,9 @@
 class CardsController < ApplicationController
 
+  def index
+    @cards = Card.all
+  end
+
   def new
     @card = Card.new
     @factions = Faction.all
@@ -20,6 +24,30 @@ class CardsController < ApplicationController
 
   def show
     @card = Card.find(params[:id])
+  end
+
+  def edit
+    @card = Card.find(params[:id])
+    @factions = Faction.all
+    @card_types = CardType.all
+  end
+
+  def update
+    @card = Card.find(params[:id])
+    if @card.update(card_params)
+      redirect_to @card
+    else
+      @factions = Faction.all
+      @card_types = CardType.all
+      flash[:alert] = 'Não foi possível atualizar a carta'
+      render :edit
+    end
+  end
+
+  def destroy
+    @card = Card.find(params[:id])
+    @card.destroy
+    redirect_to cards_path
   end
 
   private 
