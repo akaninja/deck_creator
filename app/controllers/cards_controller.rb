@@ -50,6 +50,13 @@ class CardsController < ApplicationController
     redirect_to cards_path
   end
 
+  def search
+    @search_results = Card.where('name like ? OR description like ?', "%#{params[:q]}%", "%#{params[:q]}%" )
+    if @search_results.empty?
+      flash[:alert] = 'Nenhum resultado encontrado'
+    end
+  end
+
   private 
 
   def card_params

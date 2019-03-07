@@ -13,6 +13,11 @@
     <%= link_to  "Todas as cartas", cards_path %> | 
     <%= link_to  "Facções", factions_path %> | 
     <%= link_to  "Tipos", card_types_path %> |
+    <%= form_tag search_path ,  method: 'get' do %>
+      <%= label_tag :q, 'Busca' %>
+      <%= text_field_tag :q %>
+      <%= submit_tag 'Pesquisar' %>
+    <% end %>
   </nav>
 
   <body>
