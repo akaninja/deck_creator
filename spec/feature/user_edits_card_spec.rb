@@ -67,4 +67,33 @@ feature 'User edits card info' do
 
   end
 
+  scenario 'and uploads image art successfully' do
+    card_type1 = CardType.create(name: 'Magia')
+    card_type2 = CardType.create(name: 'Encantamento')
+    faction1 = Faction.create(name: 'Ruby')
+    faction2 = Faction.create(name: 'Javascript')
+    card1 = Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...')
+
+    visit root_path
+    click_on 'Todas as cartas'
+    click_on 'Lobisomem'
+    click_on 'Editar'
+
+    select 'Javascript', from: 'Facção'
+    fill_in 'Nome', with: 'Selo contra Lobisomem'
+    fill_in 'Custo', with: '5'
+    select 'Encantamento', from: 'Tipo'
+    fill_in 'Descrição', with: 'Vira, vira, vira homem... vira, vira lobisomem'
+    attach_file 'Imagem', Rails.root.join('spec', 'support', 'warrior.jpg')
+    click_on 'Enviar'
+
+    expect(page).to have_css('h1', text: 'Selo contra Lobisomem')
+    expect(page).to have_css('h3', text: 'Javascript')
+    expect(page).to have_css('p', text: '5 mana')
+    expect(page).to have_css('p', text: 'Encantamento')
+    expect(page).to have_css('p', text: 'Vira, vira, vira homem... vira, vira lobisomem')
+    expect(page).to have_css('img[src*="warrior.jpg"]')
+
+  end
+
 end

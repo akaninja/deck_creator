@@ -24,5 +24,6 @@
                 description: 'Monarca.')
     Card.create(name: 'Bobo da corte', card_type: card_type1, faction: faction1, play_cost: '11', 
                 description: 'Palhaço da hora.')
-                
+    Card.create(name: 'Algemas', card_type: card_type1, faction: faction2, play_cost: '3', 
+                description: 'Eu fui um menino muito mal...')
                 

@@ -1,4 +1,7 @@
 <h1> <%= @card.name %> </h1>
+  <% if @card.art.attached? %>
+    <%= image_tag @card.art %>
+  <% end %>
 <br>
 <h3><%= @card.faction.name %></h3>
 <p><%= @card.play_cost %> mana</p>

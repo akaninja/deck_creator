@@ -11,5 +11,7 @@
   <p><%= f.collection_select :card_type_id, @card_types, :id, :name %></p>
   <p><%= f.label :description, 'Descrição' %></p>
   <p><%= f.text_area :description %></p>
+  <p><%= f.label :art, 'Imagem' %></p>
+  <p><%= f.file_field :art %></p>
   <p><%= f.submit 'Enviar' %></p>
 <% end %>
