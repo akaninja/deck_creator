@@ -9,6 +9,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <nav>
+    <%= link_to  "Home", root_path %> | 
     <%= link_to  "Criar carta", new_card_path %> | 
     <%= link_to  "Todas as cartas", cards_path %> | 
     <%= link_to  "Facções", factions_path %> | 

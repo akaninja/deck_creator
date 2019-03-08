@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   get 'search', to: 'cards#search'
 
-  resources :cards
+  resources :cards do
+    member do
+      get 'highlight'
+      delete 'unhighlight', to: 'cards#unhighlight'
+    end
+  end
+
   resources :factions
   resources :card_types
 end

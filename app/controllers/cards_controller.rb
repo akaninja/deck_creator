@@ -57,10 +57,22 @@ class CardsController < ApplicationController
     end
   end
 
+  def highlight
+    @card = Card.find(params[:id])
+    @card.update(highlight: true)
+    redirect_to @card
+  end
+
+  def unhighlight
+    @card = Card.find(params[:id])
+    @card.update(highlight: false)
+    redirect_to @card
+  end
+
   private 
 
   def card_params
-    params.require(:card).permit(:name, :play_cost, :description, :card_type_id, :faction_id, :art)
+    params.require(:card).permit(:name, :play_cost, :description, :card_type_id, :faction_id, :art, highlight: false)
   end
   
 end
