@@ -1,7 +1,22 @@
 class CardsController < ApplicationController
+  before_action :authenticate_user!, only:[:new, :create, :edit, :update, :destroy, :highlight, :unhighlight, :my]
 
   def index
-    @cards = Card.all
+    @factions = Faction.all
+    @card_types = CardType.all
+    if params[:faction_id]
+      @cards = Card.where(faction: params[:faction_id])
+    elsif params[:card_type_id]
+      @cards = Card.where(card_type: params[:card_type_id])
+    elsif params[:faction_id] && params[:card_type_id]
+      @cards = Card.where("faction = ? AND card_type = ?", params[:faction_id], params[:card_type_id])
+    else 
+      @cards = Card.all
+    end
+  end
+
+  def my
+    @cards = Card.where(user: current_user)
   end
 
   def new
@@ -12,13 +27,14 @@ class CardsController < ApplicationController
 
   def create
     @card = Card.new(card_params)
+    @card.user = current_user
     if @card.save
       redirect_to @card
     else
       @factions = Faction.all
       @card_types = CardType.all
       flash[:alert] = 'Não foi possível salvar a carta'
-      render 'new'
+      render :new
     end
   end
 
@@ -28,8 +44,12 @@ class CardsController < ApplicationController
 
   def edit
     @card = Card.find(params[:id])
-    @factions = Faction.all
-    @card_types = CardType.all
+    if @card.author?(current_user)
+      @factions = Faction.all
+      @card_types = CardType.all
+    else 
+      redirect_to cards_path
+    end
   end
 
   def update
@@ -46,7 +66,9 @@ class CardsController < ApplicationController
 
   def destroy
     @card = Card.find(params[:id])
-    @card.destroy
+    if @card.author?(current_user)        
+      @card.destroy
+    end
     redirect_to cards_path
   end
 
@@ -59,13 +81,17 @@ class CardsController < ApplicationController
 
   def highlight
     @card = Card.find(params[:id])
-    @card.update(highlight: true)
+    if @card.author?(current_user)
+      @card.update(highlight: true)
+    end
     redirect_to @card
   end
 
   def unhighlight
     @card = Card.find(params[:id])
-    @card.update(highlight: false)
+    if @card.author?(current_user)
+      @card.update(highlight: false)
+    end
     redirect_to @card
   end
 

@@ -1,5 +1,19 @@
 <h1>Cartas</h1>
 
+<h4>Filtros:
+<% if user_signed_in? %>
+<%= link_to  "Minhas cartas", my_cards_path %> 
+<% end %>
+</h4>
+
+<%= form_tag cards_path, method: :get do%>
+  <%= label_tag :faction_id, "Facção" %>
+  <%= select_tag :faction_id, options_from_collection_for_select(@factions, :id, :name)%>
+  <%= label_tag :card_type_id, "Tipo" %>
+  <%= select_tag :card_type_id, options_from_collection_for_select(@card_types, :id, :name)%>
+  <%= submit_tag 'Filtrar'%>
+<% end %>
+
 <% @cards.each do |card| %>
 <h4> <%= link_to card.name, card_path(card.id) %></h4>
 <p>

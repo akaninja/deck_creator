@@ -8,14 +8,18 @@
 <p><%= @card.card_type.name%></p>
 <p><%= @card.description %></p>
 <br>
-<p>
-<%= link_to  "Editar", edit_card_path %> | 
-<%= link_to  "Excluir", card_path, method: :delete, data: {confirm: 'Excluir carta?'} %> | 
+<p><%= "Carta criada por #{@card.user.email}" %>
+<br>
+<% if user_signed_in? && @card.author?(current_user) %>
+  <p>
+  <%= link_to  "Editar", edit_card_path %> | 
+  <%= link_to  "Excluir", card_path, method: :delete, data: {confirm: 'Excluir carta?'} %> | 
 
-<% if @card.highlight? %>
-  <%= link_to  "Remover destaque", unhighlight_card_path, method: :delete %>
-<% else %>
-  <%= link_to  "Destacar", highlight_card_path %> 
+  <% if @card.highlight? %>
+    <%= link_to  "Remover destaque", unhighlight_card_path, method: :delete %>
+  <% else %>
+    <%= link_to  "Destacar", highlight_card_path %> 
+  <% end %>
+  </p>
 <% end %>
-</p>
 <p><%= link_to  "Voltar", cards_path %></p>

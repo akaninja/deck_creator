@@ -1,0 +1,12 @@
+<h1>Minhas cartas</h1>
+
+<h4>Filtros:   
+<%= link_to  "Todas as cartas", cards_path %>
+</h4>
+
+<% @cards.each do |card| %>
+<h4> <%= link_to card.name, card_path(card.id) %></h4>
+<p>
+<%= card.faction.name %> | <%= card.card_type.name %> | <%= card.play_cost%>
+</p>
+<% end %>

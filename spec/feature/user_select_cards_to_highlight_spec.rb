@@ -7,26 +7,31 @@ feature 'User highlights cards' do
     card_type2 = CardType.create(name: 'Encantamento')
     faction1 = Faction.create(name: 'Ruby')
     faction2 = Faction.create(name: 'Javascript')
-    Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
-                description: 'Uivos terríveis...', highlight: false)
-    Card.create(name: 'Escudo', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Fiel escueiro.', highlight: false)
-    Card.create(name: 'Bola de fogo', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Alô, quem é?', highlight: false)
-    Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '7', 
-                description: 'Meu herói....', highlight: false)
-    Card.create(name: 'Chuva de Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
-                description: 'Também conhecido como granizo.',highlight: false)
-    Card.create(name: 'Rei', card_type: card_type1, faction: faction1, play_cost: '9', 
-                description: 'Monarca.', highlight: false)
-    Card.create(name: 'Bobo da corte', card_type: card_type1, faction: faction1, play_cost: '11', 
-                description: 'Palhaço da hora.', highlight: false)
-    Card.create(name: 'Algemas', card_type: card_type1, faction: faction2, play_cost: '3', 
-                description: 'Eu fui um menino muito mal...', highlight: false)
+
+    user = User.create!(email: 'user@email.com', password: '123456')
+
+    Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
+                description: 'Uivos terríveis...', highlight: false, user: user)
+    Card.create!(name: 'Escudo', card_type: card_type2, faction: faction2, play_cost: '4', 
+                description: 'Fiel escueiro.', highlight: false, user: user)
+    Card.create!(name: 'Bola de fogo', card_type: card_type1, faction: faction1, play_cost: '6', 
+                description: 'Alô, quem é?', highlight: false, user: user)
+    Card.create!(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '7', 
+                description: 'Meu herói....', highlight: false, user: user)
+    Card.create!(name: 'Chuva de Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
+                description: 'Também conhecido como granizo.',highlight: false, user: user)
+    Card.create!(name: 'Rei', card_type: card_type1, faction: faction1, play_cost: '9', 
+                description: 'Monarca.', highlight: false, user: user)
+    Card.create!(name: 'Bobo da corte', card_type: card_type1, faction: faction1, play_cost: '11', 
+                description: 'Palhaço da hora.', highlight: false, user: user)
+    Card.create!(name: 'Algemas', card_type: card_type1, faction: faction2, play_cost: '3', 
+                description: 'Eu fui um menino muito mal...', highlight: false, user: user)
+
+    login_as user, :scope => :user                
 
     visit root_path
-    click_on 'Todas as cartas'
-    click_on 'Lobisomem'
+    click_on 'Cartas'
+    click_on 'Lobisomem'  
     click_on 'Destacar'
     click_on 'Home'
 
@@ -40,8 +45,11 @@ feature 'User highlights cards' do
   scenario 'and Highlight button changes to unhighlight' do
     card_type1 = CardType.create(name: 'Magia')
     faction1 = Faction.create(name: 'Ruby')
-    card = Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
-                description: 'Uivos terríveis...')
+    user = User.create!(email: 'user@email.com', password: '123456')
+    card = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
+                description: 'Uivos terríveis...', highlight: false, user: user)
+
+    login_as user, :scope => :user
 
     visit card_path(1)
     click_on 'Destacar'
@@ -59,11 +67,14 @@ feature 'User highlights cards' do
   scenario 'and unhighlights it successfully' do
     card_type1 = CardType.create(name: 'Magia')
     faction1 = Faction.create(name: 'Ruby')
-    card = Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
-                description: 'Uivos terríveis...')
+    user = User.create!(email: 'user@email.com', password: '123456')
+    card = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
+                description: 'Uivos terríveis...', highlight: false, user: user)
 
     card.update(highlight: true)            
     
+    login_as user, :scope => :user
+
     visit card_path(1)
     click_on 'Remover destaque'
 

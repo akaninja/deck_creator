@@ -46,16 +46,19 @@ feature 'User edits faction' do
     card_type2 = CardType.create(name: 'Encantamento')
     faction1 = Faction.create(name: 'Ruby')
     faction2 = Faction.create(name: 'Javascript')
-    Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Auuuuuuuuuu...')
-    Card.create(name: 'Bola de fogo', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Quem é?')
-    Card.create(name: 'Chuva de gelo', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Diacho...')
-    Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Gemidos terríveis...')
-    Card.create(name: 'Lago espelhado', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Quem é o mais delício?')
+
+    user = User.create!(email: 'user@email.com', password: '123456')
+
+    Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', 
+                description: 'Auuuuuuuuuu...', user: user)
+    Card.create!(name: 'Bola de fogo', card_type: card_type2, faction: faction2, play_cost: '4', 
+                description: 'Quem é?', user: user)
+    Card.create!(name: 'Chuva de gelo', card_type: card_type1, faction: faction1, play_cost: '6', 
+                description: 'Diacho...', user: user)
+    Card.create!(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', 
+                description: 'Gemidos terríveis...', user: user)
+    Card.create!(name: 'Lago espelhado', card_type: card_type1, faction: faction1, play_cost: '6', 
+                description: 'Quem é o mais delício?', user: user)
 
     faction1.destroy
     cards = Card.all.length

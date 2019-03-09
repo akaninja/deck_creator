@@ -9,9 +9,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <nav>
+    <p>
+      <% if user_signed_in? %>
+        <%= "Bem vindo, #{current_user.email}." %> | <%= link_to  "Sair", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to  "Entrar", new_user_session_path %>
+      <% end %>
+    </p>
+    <p>
     <%= link_to  "Home", root_path %> | 
     <%= link_to  "Criar carta", new_card_path %> | 
-    <%= link_to  "Todas as cartas", cards_path %> | 
+    <%= link_to  "Cartas", cards_path %> | 
     <%= link_to  "Facções", factions_path %> | 
     <%= link_to  "Tipos", card_types_path %> |
     <%= form_tag search_path ,  method: 'get' do %>
@@ -19,7 +27,11 @@
       <%= text_field_tag :q %>
       <%= submit_tag 'Pesquisar' %>
     <% end %>
+    </p>
   </nav>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
 
   <body>
     <%= yield %>
