@@ -16,7 +16,7 @@ class CardsController < ApplicationController
   end
 
   def my
-    @cards = Card.where(user: current_user)
+    @cards = current_user.cards
   end
 
   def new
@@ -40,6 +40,7 @@ class CardsController < ApplicationController
 
   def show
     @card = Card.find(params[:id])
+    @user_decks = current_user.decks
   end
 
   def edit
@@ -93,6 +94,19 @@ class CardsController < ApplicationController
       @card.update(highlight: false)
     end
     redirect_to @card
+  end
+
+  def add_to_deck
+    @card = Card.find(params[:id])
+    @deck = Deck.find(params[:deck_id])
+
+    @deck_card = DeckCard.create!(deck: @deck, card: @card)
+    if @deck_card.save
+      flash[:notice] = "Carta adicionada ao Deck: #{@deck.name}"
+      redirect_to cards_path
+    else
+      flash[:alert] = 'Não foi possível adicionar a carta ao deck'
+    end
   end
 
   private 

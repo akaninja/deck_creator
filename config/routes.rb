@@ -10,10 +10,12 @@ Rails.application.routes.draw do
     member do
       get 'highlight'
       delete 'unhighlight', to: 'cards#unhighlight'
+      post 'add_to_deck'
     end
   end
 
   resources :factions
   resources :card_types
+  resources :decks
 
 end

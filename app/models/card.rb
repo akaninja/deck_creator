@@ -3,6 +3,8 @@ class Card < ApplicationRecord
   belongs_to :faction
   belongs_to :user
 
+  has_many :deck_cards
+  
   validates :name, :play_cost, :description, presence: true
   validates :play_cost, numericality: {greater_than: 0}
   validates :name, uniqueness: true

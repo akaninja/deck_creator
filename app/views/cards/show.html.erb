@@ -21,5 +21,12 @@
     <%= link_to  "Destacar", highlight_card_path %> 
   <% end %>
   </p>
+  <p>
+  <%= form_tag add_to_deck_card_path, method: :post do %>
+    <%= label_tag :deck_id, "Decks" %>
+    <%= select_tag :deck_id, options_from_collection_for_select(@user_decks, :id, :name) %>
+    <%= submit_tag 'Adicionar ao deck'%>
+  <% end %>
+  </p>
 <% end %>
 <p><%= link_to  "Voltar", cards_path %></p>

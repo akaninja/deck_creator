@@ -1,0 +1,13 @@
+<h1>Decks</h1>
+<br>
+<%= link_to  "Criar deck", new_deck_path %>
+<%= flash[:alert] %>
+<br>
+
+<ul>
+<% @decks.each do |deck| %>
+<li><%= link_to deck.name, deck_path(deck.id) %></li>
+<% end %>
+</ul>
+
+<%= link_to  "Voltar", root_path   %>

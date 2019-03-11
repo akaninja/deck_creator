@@ -1,0 +1,9 @@
+<h1>Criar Deck</h1>
+<%= flash[:alert] %>
+<%= form_for @deck do |f|%>
+  <%= f.label :name, 'Nome' %>
+  <%= f.text_field :name %>
+  <%= f.submit 'Enviar' %>
+<% end %>
+<br>
+<%= link_to  "Voltar", decks_path %>
