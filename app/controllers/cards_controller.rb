@@ -109,6 +109,15 @@ class CardsController < ApplicationController
     end
   end
 
+  def send_email
+    @card = Card.find(params[:id])
+    @email_adress = params[:email_adress]
+    if CardsMailer.email_card(@card.id, @email_adress)  
+      flash[:notice] = 'E-mail enviado'
+      redirect_to @card
+    end
+  end
+
   private 
 
   def card_params

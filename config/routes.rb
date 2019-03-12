@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'highlight'
       delete 'unhighlight', to: 'cards#unhighlight'
       post 'add_to_deck'
+      post 'send_email'
     end
   end
 

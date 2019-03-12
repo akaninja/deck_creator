@@ -28,5 +28,9 @@
     <%= submit_tag 'Adicionar ao deck'%>
   <% end %>
   </p>
+  <%= form_tag send_email_card_path, method: :post %>
+  <%= label_tag :email_adress, "Email"  %>
+  <%= text_field_tag :email_adress %>
+  <%= submit_tag 'Enviar' %>
 <% end %>
 <p><%= link_to  "Voltar", cards_path %></p>
