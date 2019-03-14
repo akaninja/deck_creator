@@ -14,9 +14,12 @@ Rails.application.routes.draw do
       post 'send_email'
     end
   end
+  
+  resources :decks do
+    get 'my', on: :collection
+  end
 
   resources :factions
   resources :card_types
-  resources :decks
 
 end

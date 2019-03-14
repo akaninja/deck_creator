@@ -4,7 +4,7 @@ feature 'User creates a deck of cards' do
   scenario 'successfully' do
     
     user = User.create!(email: 'user@email.com', password: '123456')
-    deck = Deck.create!(name: 'Deck de demônios', user: user)
+    deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
 
     login_as user, :scope => :user
     visit root_path
@@ -40,7 +40,7 @@ feature 'User creates a deck of cards' do
     card1 = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...', user: user)
     card2 = Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...', user: user)
 
-    deck = Deck.create!(name: 'Deck de demônios', user: user)
+    deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
     
     login_as user, :scope => :user
 
@@ -63,7 +63,7 @@ feature 'User creates a deck of cards' do
     card1 = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...', user: user)
     card2 = Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...', user: user)
 
-    deck = Deck.create!(name: 'Deck de demônios', user: user)
+    deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
     
     login_as user, :scope => :user
 
@@ -75,6 +75,55 @@ feature 'User creates a deck of cards' do
     click_on 'Deck de demônios'
 
     expect(page).to have_css('p', text:'Lobisomem')
+  end
+
+  scenario 'and sets it to Private' do
+    user = User.create!(email: 'user@email.com', password: '123456')
+
+    login_as user, :scope => :user
+    visit root_path
+    click_on 'Decks'
+    click_on 'Criar deck'
+    fill_in 'Nome', with: 'Deck de monstros'
+    page.check('Privado')
+    click_on 'Enviar'
+
+    deck = Deck.last
+
+    expect(deck.private).to eq true
+
+  end
+
+  scenario 'and private deck is not visible to others' do
+    user = User.create!(email: 'user@email.com', password: '123456')
+    Deck.create!(name: 'Deck de demônios', private: true, user: user)
+    Deck.create!(name: 'Deck de flores', private: false, user: user)
+  
+    visit root_path
+    click_on 'Decks'
+    
+    expect(page).to have_css('li', text: 'Deck de flores')
+    expect(page).not_to have_css('li', text: 'Deck de demônios')
+
+  end
+
+  scenario 'and views his decks in My decks page' do
+    user = User.create!(email: 'user@email.com', password: '123456')
+    user2 = User.create!(email: 'user2@email.com', password: '123456')
+    Deck.create!(name: 'Deck de demônios', private: true, user: user)
+    Deck.create!(name: 'Deck de flores', private: false, user: user)
+    Deck.create!(name: 'Deck de goiabas', private: false, user: user2)
+
+    login_as user, :scope => :user
+    visit root_path
+    click_on 'Decks'
+    click_on 'Meus decks'
+    
+    expect(current_path).to eq my_decks_path
+    expect(page).to have_css('li', text: 'Deck de flores')
+    expect(page).to have_css('li', text: 'Deck de demônios')
+    expect(page).not_to have_css('li', text: 'Deck de goiabas')
+
   end
 
 end
