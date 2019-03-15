@@ -1,4 +1,8 @@
 <h1><%= @deck.name %> </h1>
-<% @deck.cards.each do |card| %>
-<p><%= card.name %></p>
+<p>
+  <%= link_to  "Excluir deck", deck_path, method: :delete %> |
+  <%= link_to  "Renomear deck", edit_deck_path %>
+ </p>
+<% @deck.cards.each do |card| %> 
+  <p><%= card.name %> <%= link_to  "Remover carta", deck_card_path(card.deck_cards.ids), method: :delete %></p>
 <% end %> 

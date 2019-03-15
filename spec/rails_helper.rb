@@ -31,7 +31,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
-
+  config.include FactoryBot::Syntax::Methods
   #Para testar devise com capybara
   config.include Warden::Test::Helpers
 

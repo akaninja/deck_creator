@@ -35,7 +35,6 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
 gem 'devise'
 
 group :development, :test do
@@ -44,6 +43,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-rails', '~> 3.8'
   gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
 end
 
 group :development do

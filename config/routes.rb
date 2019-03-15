@@ -21,5 +21,6 @@ Rails.application.routes.draw do
 
   resources :factions
   resources :card_types
+  resources :deck_cards
 
 end

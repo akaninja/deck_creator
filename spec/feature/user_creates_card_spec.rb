@@ -91,7 +91,9 @@ feature 'User creates card' do
     Faction.create(name: 'Ruby')
     CardType.create(name: 'Criatura')
 
-    user = User.create!(email: 'user@email.com', password: '123456')
+    #user = User.create!(email: 'user@email.com', password: '123456')
+    user = create(:user)
+
     login_as user, :scope => :user
 
     visit root_path

@@ -14,7 +14,7 @@ class DecksController < ApplicationController
   end
 
   def create
-    @deck = Deck.new(params.require(:deck).permit(:name, :private, :user))
+    @deck = Deck.new(deck_params)
     @deck.user = current_user
     if @deck.save
       redirect_to decks_path
@@ -27,5 +27,33 @@ class DecksController < ApplicationController
   def show
     @deck = Deck.find(params[:id])
   end
+
+  def edit
+    @deck = Deck.find(params[:id])
+  end
+
+  def update
+    @deck = Deck.find(params[:id])
+    if @deck.update(deck_params)
+      redirect_to @deck
+    else
+      flash[:alert] = 'Não foi possível atualizar o deck'
+      render :edit
+    end
+
+  end
+
+  def destroy
+    deck = Deck.find(params[:id])
+    deck.destroy
+    redirect_to decks_path
+  end
+
+  private
+  
+  def deck_params
+    params.require(:deck).permit(:name, :private, :user)
+  end
+
 
 end
