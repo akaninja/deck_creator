@@ -4,11 +4,11 @@ feature 'User edits deck' do
   scenario 'and removes a card' do
 
     user = create(:user)
-    card = create(:card, user: user)
+    card = create(:card)
     deck = create(:deck, user: user)
     DeckCard.create(deck: deck, card: card)
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
 
     visit deck_path(deck.id)
     click_on 'Remover carta'
@@ -21,11 +21,11 @@ feature 'User edits deck' do
   scenario 'and deletes deck' do 
     
     user = create(:user)
-    card = create(:card, user: user)
+    card = create(:card)
     deck = create(:deck, user: user)
     DeckCard.create(deck: deck, card: card)
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
 
     visit deck_path(deck.id)
     click_on 'Excluir deck'
@@ -38,7 +38,7 @@ feature 'User edits deck' do
   scenario 'and renames de deck' do
   
     user = create(:user)
-    card = create(:card, user: user)
+    card = create(:card)
     deck = create(:deck, user: user)
     DeckCard.create(deck: deck, card: card)
 

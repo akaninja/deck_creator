@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User logs in' do
   scenario 'successfully' do
     
-    User.create(email: 'usuario@hotmail.com', password: '123456')
+    User.create(name: 'Usuario', email: 'usuario@hotmail.com', password: '123456')
 
     visit root_path
     click_on  'Entrar'
@@ -12,12 +12,12 @@ feature 'User logs in' do
     click_on 'Enviar'
 
     expect(current_path).to eq root_path
-    expect(page).to have_css('p', text: 'Bem vindo, usuario@hotmail.com.')
+    expect(page).to have_css('p', text: 'Bem vindo, Usuario.')
   end
 
   scenario 'and enters wrong information' do
         
-    User.create(email: 'usuario@hotmail.com', password: '123456')
+    User.create(name: 'Usuario', email: 'usuario@hotmail.com', password: '123456')
 
     visit root_path
     click_on  'Entrar'
@@ -31,7 +31,7 @@ feature 'User logs in' do
   end
 
   scenario 'and logs out successfully' do
-    user = User.create(email: 'usuario@hotmail.com', password: '123456')
+    user = User.create(name: 'Usuario', email: 'usuario@hotmail.com', password: '123456')
     login_as user, :scope => :user  
     
     visit root_path

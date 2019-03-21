@@ -1,7 +1,7 @@
 class Card < ApplicationRecord
   belongs_to :card_type 
   belongs_to :faction
-  belongs_to :user
+  belongs_to :admin
 
   has_many :deck_cards
   
@@ -10,9 +10,5 @@ class Card < ApplicationRecord
   validates :name, uniqueness: true
 
   has_one_attached :art
-
-  def author?(user)
-    self.user == user
-  end
   
 end

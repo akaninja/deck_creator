@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  before_action :authenticate_user!, only:[:new, :create, :edit, :update, :destroy, :highlight, :unhighlight, :my]
+  before_action :authenticate_admin!, only:[:new, :create, :edit, :update, :destroy, :highlight, :unhighlight, :my]
 
   def index
     @factions = Faction.all
@@ -16,7 +16,7 @@ class CardsController < ApplicationController
   end
 
   def my
-    @cards = current_user.cards
+    @cards = current_admin.cards
   end
 
   def new
@@ -27,7 +27,7 @@ class CardsController < ApplicationController
 
   def create
     @card = Card.new(card_params)
-    @card.user = current_user
+    @card.admin = current_admin
     if @card.save
       redirect_to @card
     else
@@ -40,17 +40,17 @@ class CardsController < ApplicationController
 
   def show
     @card = Card.find(params[:id])
-    @user_decks = current_user.decks
+    return @user_decks = current_user.decks if user_signed_in?
+    # if user_signed_in?
+    #   @user_decks = current_user.decks
+    # end
+
   end
 
   def edit
     @card = Card.find(params[:id])
-    if @card.author?(current_user)
-      @factions = Faction.all
-      @card_types = CardType.all
-    else 
-      redirect_to cards_path
-    end
+    @factions = Faction.all
+    @card_types = CardType.all 
   end
 
   def update
@@ -67,9 +67,7 @@ class CardsController < ApplicationController
 
   def destroy
     @card = Card.find(params[:id])
-    if @card.author?(current_user)        
-      @card.destroy
-    end
+    @card.destroy
     redirect_to cards_path
   end
 
@@ -82,17 +80,13 @@ class CardsController < ApplicationController
 
   def highlight
     @card = Card.find(params[:id])
-    if @card.author?(current_user)
-      @card.update(highlight: true)
-    end
+    @card.update(highlight: true)
     redirect_to @card
   end
 
   def unhighlight
     @card = Card.find(params[:id])
-    if @card.author?(current_user)
-      @card.update(highlight: false)
-    end
+    @card.update(highlight: false)
     redirect_to @card
   end
 

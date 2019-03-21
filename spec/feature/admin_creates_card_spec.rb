@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-feature 'User creates card' do 
+feature 'Admin creates card' do 
   scenario 'successfully' do
 
-    user = User.create!(email: 'user@email.com', password: '123456')
+    admin = Admin.create!(name: 'João', email: 'user@email.com', password: '123456')
     Faction.create!(name: 'Ruby')
     CardType.create!(name: 'Criatura')
 
-    login_as user, :scope => :user
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Criar carta'
@@ -24,7 +24,6 @@ feature 'User creates card' do
     expect(page).to have_css('p', text: '5 mana')
     expect(page).to have_css('p', text: 'Criatura')
     expect(page).to have_css('p', text: 'Vira, vira, vira homem... vira, vira lobisomem')
-    expect(page).to have_css('p', text: 'Carta criada por user@email.com')
 
   end
 
@@ -32,8 +31,8 @@ feature 'User creates card' do
 
     Faction.create(name: 'Ruby')
     CardType.create(name: 'Criatura')
-    user = User.create!(email: 'user@email.com', password: '123456')
-    login_as user, :scope => :user
+    admin = Admin.create!(name: 'João', email: 'user@email.com', password: '123456')
+    login_as admin, :scope => :admin
     
     visit root_path
     click_on 'Criar carta'
@@ -49,8 +48,8 @@ feature 'User creates card' do
 
     Faction.create(name: 'Ruby')
     CardType.create(name: 'Criatura')
-    user = User.create!(email: 'user@email.com', password: '123456')
-    login_as user, :scope => :user
+    admin = Admin.create!(name: 'João', email: 'user@email.com', password: '123456')
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Criar carta'
@@ -66,13 +65,13 @@ feature 'User creates card' do
   end
   
   scenario 'and name must be unique' do
-    user = User.create!(email: 'user@email.com', password: '123456')
-    user2 = User.create!(email: 'user2@email.com', password: '789101')
+    admin = Admin.create!(name: 'João', email: 'user@email.com', password: '123456')
+    admin2 = Admin.create!(name: 'Vini', email: 'user2@email.com', password: '789101')
     faction = Faction.create(name: 'Ruby')
     card_type = CardType.create(name: 'Criatura')
-    card = Card.create!(name: 'Lobisomem', faction: faction, card_type: card_type, play_cost: '5', description: "Descrição", user: user2)
+    card = Card.create!(name: 'Lobisomem', faction: faction, card_type: card_type, play_cost: '5', description: "Descrição", admin: admin2)
 
-    login_as user, :scope => :user
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Criar carta'
@@ -92,9 +91,9 @@ feature 'User creates card' do
     CardType.create(name: 'Criatura')
 
     #user = User.create!(email: 'user@email.com', password: '123456')
-    user = create(:user)
+    admin = create(:admin)
 
-    login_as user, :scope => :user
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Criar carta'
@@ -119,11 +118,28 @@ feature 'User creates card' do
   scenario 'and must be logged in' do
     
     visit root_path
-    click_on 'Criar carta'
 
-    expect(current_path).to eq user_session_path
-    expect(page).to have_content('Email')
-    expect(page).to have_content('Senha')
+    expect(page).not_to have_css('p', text: 'Criar carta')
+
+  end
+
+  scenario 'must be admin and cant see button Create card' do
+    user = create(:user)
+    login_as user, scope: :user
+
+    visit root_path
+    expect(page).not_to have_css('p', text: 'Criar carta')
+
+  end
+
+  scenario 'and must be admin' do
+    user = create(:user)
+    login_as user, scope: :user
+
+    visit new_card_path
+
+    expect(current_path).to eq new_admin_session_path
+
 
   end
 

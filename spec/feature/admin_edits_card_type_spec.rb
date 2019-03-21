@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-feature 'User edits card type' do
+feature 'Admin edits card type' do
   scenario 'successfully' do
-    
+    admin = create(:admin)
     CardType.create(name: 'Criatura')
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Tipos'
@@ -20,7 +21,9 @@ feature 'User edits card type' do
 
   scenario 'and must fill in Name' do
     
+    admin = create(:admin)
     CardType.create(name: 'Criatura')
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Tipos'
@@ -34,7 +37,10 @@ feature 'User edits card type' do
 
 
   scenario 'deletes a type successfully' do
+    
+    admin = create(:admin)
     CardType.create(name: 'Criatura')
+    login_as admin, :scope => :admin
 
     visit root_path
     click_on 'Tipos'
@@ -51,18 +57,18 @@ feature 'User edits card type' do
     faction1 = Faction.create(name: 'Ruby')
     faction2 = Faction.create(name: 'Javascript')
 
-    user = User.create!(email: 'user@email.com', password: '123456')
+    admin = Admin.create!(name: 'João', email: 'user@email.com', password: '123456')
 
     Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Auuuuuuuuuu...', user: user)
+                description: 'Auuuuuuuuuu...', admin: admin)
     Card.create!(name: 'Bola de fogo', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Quem é?', user: user)
+                description: 'Quem é?', admin: admin)
     Card.create!(name: 'Chuva de gelo', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Diacho...', user: user)
+                description: 'Diacho...', admin: admin)
     Card.create!(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Gemidos terríveis...', user: user)
+                description: 'Gemidos terríveis...', admin: admin)
     Card.create!(name: 'Lago espelhado', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Quem é o mais delício?', user: user)
+                description: 'Quem é o mais delício?', admin: admin)
   
     card_type1.destroy
     cards = Card.all.length

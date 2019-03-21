@@ -1,4 +1,5 @@
 class CardTypesController < ApplicationController
+  before_action :authenticate_admin! 
 
   def index
     @card_types = CardType.all

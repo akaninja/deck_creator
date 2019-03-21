@@ -1,4 +1,5 @@
 class FactionsController < ApplicationController
+  before_action :authenticate_admin!
 
   def index
     @factions = Faction.all

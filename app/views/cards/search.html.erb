@@ -1,7 +1,7 @@
 <h1>Resultados da busca</h1>
 <%= flash[:alert] %>
 
-<%= @search_results.each do |card| %>
+<% @search_results.each do |card| %>
   <h3><%= link_to  card.name, card_path(card.id) %></h3>
 <% end %>
 

@@ -3,10 +3,10 @@ require 'rails_helper'
 feature 'User creates a deck of cards' do
   scenario 'successfully' do
     
-    user = User.create!(email: 'user@email.com', password: '123456')
-    deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
+    user = create(:user, email: 'user@email.com', password: '123456')
+    deck = Deck.create(name: 'Deck de demônios', private: false, user: user)
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
     visit root_path
     click_on 'Decks'
     click_on 'Criar deck'
@@ -20,9 +20,9 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'and and must fill in Name' do
-    user = User.create!(email: 'user@email.com', password: '123456')
+    user = create(:user, email: 'user@email.com', password: '123456')
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
     visit decks_path
     click_on 'Criar deck'
     fill_in 'Nome', with: ''
@@ -32,17 +32,17 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'and adds card to deck' do
-    card_type1 = CardType.create(name: 'Magia')
-    card_type2 = CardType.create(name: 'Encantamento')
-    faction1 = Faction.create(name: 'Ruby')
-    faction2 = Faction.create(name: 'Javascript')
-    user = User.create!(email: 'user@email.com', password: '123456')
-    card1 = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...', user: user)
-    card2 = Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...', user: user)
+    card_type1 = create(:card_type, name: 'Magia')
+    card_type2 = create(:card_type, name: 'Encantamento')
+    faction1 = create(:faction, name: 'Ruby')
+    faction2 = create(:faction, name: 'Javascript')
+    user = create(:user, email: 'user@email.com', password: '123456')
+    card1 = create(:card, name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...')
+    card2 = create(:card, name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...')
 
-    deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
+    deck = create(:deck, name: 'Deck de demônios', private: false, user: user)
     
-    login_as user, :scope => :user
+    login_as user, scope: :user
 
     visit root_path
     click_on 'Cartas'
@@ -55,17 +55,17 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'adds card to deck, then views deck list' do
-    card_type1 = CardType.create(name: 'Magia')
-    card_type2 = CardType.create(name: 'Encantamento')
-    faction1 = Faction.create(name: 'Ruby')
-    faction2 = Faction.create(name: 'Javascript')
-    user = User.create!(email: 'user@email.com', password: '123456')
-    card1 = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...', user: user)
-    card2 = Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...', user: user)
+    card_type1 = create(:card_type, name: 'Magia')
+    card_type2 = create(:card_type, name: 'Encantamento')
+    faction1 = create(:faction, name: 'Ruby')
+    faction2 = create(:faction, name: 'Javascript')
+    user = create(:user, email: 'user@email.com', password: '123456')
+    card1 = create(:card, name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6', description: 'Uivos terríveis...')
+    card2 = create(:card, name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '4', description: 'Gemidos terríveis...')
 
     deck = Deck.create!(name: 'Deck de demônios', private: false, user: user)
     
-    login_as user, :scope => :user
+    login_as user, scope: :user
 
     visit cards_path
     click_on 'Lobisomem'
@@ -78,9 +78,9 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'and sets it to Private' do
-    user = User.create!(email: 'user@email.com', password: '123456')
+    user = create(:user, email: 'user@email.com', password: '123456')
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
     visit root_path
     click_on 'Decks'
     click_on 'Criar deck'
@@ -95,9 +95,9 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'and private deck is not visible to others' do
-    user = User.create!(email: 'user@email.com', password: '123456')
-    Deck.create!(name: 'Deck de demônios', private: true, user: user)
-    Deck.create!(name: 'Deck de flores', private: false, user: user)
+    user = create(:user, email: 'user@email.com', password: '123456')
+    create(:deck, name: 'Deck de demônios', private: true, user: user)
+    create(:deck, name: 'Deck de flores', private: false, user: user)
   
     visit root_path
     click_on 'Decks'
@@ -108,13 +108,13 @@ feature 'User creates a deck of cards' do
   end
 
   scenario 'and views his decks in My decks page' do
-    user = User.create!(email: 'user@email.com', password: '123456')
-    user2 = User.create!(email: 'user2@email.com', password: '123456')
-    Deck.create!(name: 'Deck de demônios', private: true, user: user)
-    Deck.create!(name: 'Deck de flores', private: false, user: user)
-    Deck.create!(name: 'Deck de goiabas', private: false, user: user2)
+    user = create(:user, email: 'user@email.com', password: '123456')
+    user2 = create(:user, email: 'user2@email.com', password: '123456')
+    create(:deck, name: 'Deck de demônios', private: true, user: user)
+    create(:deck, name: 'Deck de flores', private: false, user: user)
+    create(:deck, name: 'Deck de goiabas', private: false, user: user2)
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
     visit root_path
     click_on 'Decks'
     click_on 'Meus decks'

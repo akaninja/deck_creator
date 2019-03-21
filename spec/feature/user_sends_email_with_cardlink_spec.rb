@@ -2,14 +2,14 @@ require 'rails_helper'
 
 feature 'User sends email with card link' do
   scenario 'successfully' do
-    card_type1 = CardType.create(name: 'Magia')
-    faction1 = Faction.create(name: 'Ruby')
-    user = User.create!(email: 'user@email.com', password: '123456')
-    card1 = Card.create!(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6',                     description: 'Uivos terríveis', user: user)
+    card_type1 = create(:card_type, name: 'Magia')
+    faction1 = create(:faction, name: 'Ruby')
+    user = create(:user, email: 'user@email.com', password: '123456')
+    card1 = create(:card, name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '6',                                 description: 'Uivos terríveis')
     mailer_spy = class_spy(CardsMailer)
     stub_const('CardsMailer', mailer_spy) 
 
-    login_as user, :scope => :user
+    login_as user, scope: :user
 
     visit root_path
     click_on 'Lobisomem'

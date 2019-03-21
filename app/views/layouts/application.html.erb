@@ -11,18 +11,23 @@
   <nav>
     <p>
       <% if user_signed_in? %>
-        <%= "Bem vindo, #{current_user.email}." %> | <%= link_to  "Sair", destroy_user_session_path, method: :delete %>
+        <%= "Bem vindo, #{current_user.name}." %> | <%= link_to  "Sair", destroy_user_session_path, method: :delete %>
+      <% elsif admin_signed_in? %>
+        <%= "Bem vindo, #{current_admin.name}." %> | <%= link_to  "Sair", destroy_admin_session_path, method: :delete %>
+        <p>
+          <%= link_to  "Criar carta", new_card_path %> | 
+          <%= link_to  "Facções", factions_path %> | 
+          <%= link_to  "Tipos", card_types_path %>
+        </p>
       <% else %>
-        <%= link_to  "Novo usuário", new_user_registration_path %>
-        <%= link_to  "Entrar", new_user_session_path %>
+        <%= link_to  "Novo usuário", new_user_registration_path %> |
+        <%= link_to  "Entrar como usuário", new_user_session_path %> | 
+        <%= link_to  "Entrar como administrador", new_admin_session_path %>
       <% end %>
     </p>
     <p>
     <%= link_to  "Home", root_path %> | 
-    <%= link_to  "Criar carta", new_card_path %> | 
     <%= link_to  "Cartas", cards_path %> | 
-    <%= link_to  "Facções", factions_path %> | 
-    <%= link_to  "Tipos", card_types_path %> |
     <%= link_to  "Decks", decks_path %>
     <%= form_tag search_path,  method: 'get' do %>
       <%= label_tag :q, 'Busca' %>

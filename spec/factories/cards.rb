@@ -3,8 +3,9 @@ FactoryBot.define do
     sequence(:name) {|n| "Carta #{n}"}
     faction
     card_type
-    user
+    admin
     play_cost { "3" }
     description { "Descrição padrão de carta aleatória." } 
+    highlight {false}
   end
 end

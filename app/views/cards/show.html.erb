@@ -7,12 +7,27 @@
 <p><%= @card.play_cost %> mana</p>
 <p><%= @card.card_type.name%></p>
 <p><%= @card.description %></p>
+
 <br>
-<p><%= "Carta criada por #{@card.user.email}" %>
-<br>
-<% if user_signed_in? && @card.author?(current_user) %>
+
+<% if user_signed_in? %>
+    <p>
+    <%= form_tag add_to_deck_card_path, method: :post do %>
+      <%= label_tag :deck_id, "Decks" %>
+      <%= select_tag :deck_id, options_from_collection_for_select(@user_decks, :id, :name) %>
+      <%= submit_tag 'Adicionar ao deck'%>
+    <% end %>
+    </p>
+    <%= form_tag send_email_card_path, method: :post do %>
+      <%= label_tag :email_adress, "Email"  %>
+      <%= text_field_tag :email_adress %>
+      <%= submit_tag 'Enviar' %>
+    <% end %>
+<% end %> 
+
+<% if admin_signed_in? %>
   <p>
-  <%= link_to  "Editar", edit_card_path %> | 
+  <%= link_to  "Editar", edit_card_path(@card.id) %> | 
   <%= link_to  "Excluir", card_path, method: :delete, data: {confirm: 'Excluir carta?'} %> | 
 
   <% if @card.highlight? %>
@@ -20,17 +35,6 @@
   <% else %>
     <%= link_to  "Destacar", highlight_card_path %> 
   <% end %>
-  </p>
-  <p>
-  <%= form_tag add_to_deck_card_path, method: :post do %>
-    <%= label_tag :deck_id, "Decks" %>
-    <%= select_tag :deck_id, options_from_collection_for_select(@user_decks, :id, :name) %>
-    <%= submit_tag 'Adicionar ao deck'%>
-  <% end %>
-  </p>
-  <%= form_tag send_email_card_path, method: :post %>
-  <%= label_tag :email_adress, "Email"  %>
-  <%= text_field_tag :email_adress %>
-  <%= submit_tag 'Enviar' %>
+  </p> 
 <% end %>
 <p><%= link_to  "Voltar", cards_path %></p>

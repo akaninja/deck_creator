@@ -11,23 +11,25 @@
     faction1 = Faction.create(name: 'Ruby')
     faction2 = Faction.create(name: 'Javascript')
 
-    user = User.create(email: 'user@email.com', password: '123456')
-    user2 = User.create(email: 'user2@email.com', password: '123456')
+    admin = Admin.create(name: 'João', email: 'admin@email.com', password: '123456')
+    admin2 = Admin.create(name: 'João2', email: 'admin2@email.com', password: '123456')
+    user = User.create(name: 'Vini', email: 'user@email.com', password: '123456')
+    user2 = User.create(name: 'Vini2', email: 'user2@email.com', password: '123456')
 
     Card.create(name: 'Lobisomem', card_type: card_type1, faction: faction1, play_cost: '3', 
-                description: 'Uivos terríveis...', user: user)
+                description: 'Uivos terríveis...', admin: admin)
     Card.create(name: 'Escudo', card_type: card_type2, faction: faction2, play_cost: '4', 
-                description: 'Fiel escueiro.', user: user)
+                description: 'Fiel escueiro.', admin: admin)
     Card.create(name: 'Bola de fogo', card_type: card_type1, faction: faction1, play_cost: '6', 
-                description: 'Alô, quem é?', user: user)
+                description: 'Alô, quem é?', admin: admin)
     Card.create(name: 'Guerreiro', card_type: card_type2, faction: faction2, play_cost: '7', 
-                description: 'Meu herói....', user: user)
+                description: 'Meu herói....', admin: admin)
     Card.create(name: 'Chuva de Gelo', card_type: card_type1, faction: faction1, play_cost: '10', 
-                description: 'Também conhecido como granizo.', user: user2)
+                description: 'Também conhecido como granizo.',admin: admin2)
     Card.create(name: 'Rei', card_type: card_type1, faction: faction1, play_cost: '9', 
-                description: 'Monarca.', user: user2)
+                description: 'Monarca.', admin: admin2)
     Card.create(name: 'Bobo da corte', card_type: card_type1, faction: faction1, play_cost: '11', 
-                description: 'Palhaço da hora.', user: user2)
+                description: 'Palhaço da hora.', admin: admin2)
     Card.create(name: 'Algemas', card_type: card_type1, faction: faction2, play_cost: '3', 
-                description: 'Eu fui um menino muito mal...', user: user2)
+                description: 'Eu fui um menino muito mal...', admin: admin2)
                 
