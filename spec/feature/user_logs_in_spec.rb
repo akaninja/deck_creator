@@ -6,7 +6,7 @@ feature 'User logs in' do
     User.create(name: 'Usuario', email: 'usuario@hotmail.com', password: '123456')
 
     visit root_path
-    click_on  'Entrar'
+    click_on  'Entrar como usuário'
     fill_in 'Email', with: 'usuario@hotmail.com'
     fill_in 'Senha', with: '123456'
     click_on 'Enviar'
@@ -20,7 +20,7 @@ feature 'User logs in' do
     User.create(name: 'Usuario', email: 'usuario@hotmail.com', password: '123456')
 
     visit root_path
-    click_on  'Entrar'
+    click_on  'Entrar como usuário'
     fill_in 'Email', with: 'apolonio@gmail.com'
     fill_in 'Senha', with: '7655443'
     click_on 'Enviar'
